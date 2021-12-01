@@ -2,6 +2,10 @@ const chalk  = require('chalk');
 const log = console.log;
 let debugSwitch = false;
 
+/**
+ * debug开关，默认不开启
+ * @param debug
+ */
 const switchDebug = (debug) => {
   debugSwitch = debug;
 };

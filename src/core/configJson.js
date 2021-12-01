@@ -4,6 +4,10 @@ const writeJsonFile = require('write-json-file');
 const { getParams } = require('../util/env.js');
 const { checkoutTJSConfig } = require('../util/file.js');
 
+/**
+ * 处理tsconfig/jsconfig 的target
+ * @return {Promise<void>}
+ */
 const doConfigJson = async () => {
   const { base } = getParams();
   const { hasTsConfig, hasJsConfig } = checkoutTJSConfig(base);

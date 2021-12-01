@@ -16,7 +16,11 @@ const writePackageJson = async (base, json) => {
   await writeJsonFile(file, json);
 };
 
-// 处理package.json，增加新增的依赖
+/**
+ * 处理package.json，增加新增的依赖
+ * @param devDeps
+ * @return {Promise<void>}
+ */
 const doPackageJson = async (devDeps) => {
   const { base } = getParams();
   const json = await getPackageJson(base);

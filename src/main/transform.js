@@ -33,17 +33,26 @@ const viteConfig = {
 
 const devDeps = {};
 
-
+/**
+ * 增加import
+ * @param key
+ * @param value
+ */
 const addImport = (key, value) => {
   viteConfig.imports[key] = value;
 };
 
+/**
+ * 增加依赖
+ * @param key
+ * @param value
+ */
 const addDevDeps = (key, value) => {
   devDeps[key] = value;
 };
 
 /**
- * do react
+ * do react项目
  * @return {Promise}
  */
 const doReact = async () => {
@@ -67,6 +76,7 @@ const doReact = async () => {
     viteConfig.rollupOptions.serve.input = '[]';
   }
 
+  // 增加vite-plugin-svgr的支持
   if (deps['raw-loader'] || deps['svg-inline-loader']) {
     addImport('svgr', 'vite-plugin-svgr');
     addDevDeps('vite-plugin-svgr', '^0.3.0');
@@ -80,6 +90,10 @@ const doReact = async () => {
   viteConfig.plugins.push(`reactRefresh(),`);
 };
 
+/**
+ * do vue项目
+ * @return {Promise<void>}
+ */
 const doVue = async () => {
   if (!env.isVue) {
     return;
@@ -161,6 +175,10 @@ const doCommon = async () => {
   }
 };
 
+/**
+ * 获取项目类型
+ * @return {string}
+ */
 const getProType = () => {
   if (env.isReact) {
     return env.isReactMoreThan17 ? 'React 17' : 'React 16';

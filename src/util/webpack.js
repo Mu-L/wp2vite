@@ -9,6 +9,11 @@ let vueConfig = false;
 let env;
 let params;
 
+/**
+ * 获取配置信息的基础能力
+ * @param config
+ * @return {Promise<*>}
+ */
 const getConfig = async (config) => {
   process.env.NODE_ENV = 'development';
   const webpackConfig = require(config);
@@ -21,6 +26,10 @@ const getConfig = async (config) => {
   return configJson;
 };
 
+/**
+ * for react项目
+ * @return {Promise<{}>}
+ */
 const getReactWebpackConfig = async() => {
   let configFile;
   if (env.isReactAppRewired) {
@@ -67,6 +76,10 @@ const getReactWebpackConfig = async() => {
   return configJson;
 };
 
+/**
+ * for vue项目
+ * @return {Promise<*>}
+ */
 const getVueWebpackConfig = async() => {
   process.env.NODE_ENV = 'development';
   const vueConfigPath = path.resolve(params.base, webpackPath.vueConfig);
@@ -78,6 +91,10 @@ const getVueWebpackConfig = async() => {
   return result;
 };
 
+/**
+ * 保存当前项目的webpack的配置信息
+ * @return {Promise<void>}
+ */
 const saveWebpackConfig = async() => {
   env = await getEnv();
   params = getParams();
@@ -107,7 +124,10 @@ const saveWebpackConfig = async() => {
   }
 };
 
-// 获取HtmlWebpackPlugin的配置信息
+/**
+ * 获取HtmlWebpackPlugin的配置信息
+ * @return {boolean|*}
+ */
 const getWebpackHtmlPluginConfig = () => {
   if (webpackConfig && Array.isArray(webpackConfig.plugins)) {
     const plugins = webpackConfig.plugins;
@@ -121,7 +141,10 @@ const getWebpackHtmlPluginConfig = () => {
   return false;
 };
 
-// 获取DefinePlugin的配置信息
+/**
+ * 获取DefinePlugin的配置信息
+ * @return {Promise<[]>}
+ */
 const getDefinePluginConfig = async() => {
   const defines = [];
   try {
@@ -153,6 +176,10 @@ const getDefinePluginConfig = async() => {
   }
 };
 
+/**
+ * 对外暴露获取webpack配置信息的入口
+ * @return {boolean}
+ */
 const getWebpackConfig = () => {
   if (!webpackConfig) {
     debugError('webpack', 'webpack配置获取失败');

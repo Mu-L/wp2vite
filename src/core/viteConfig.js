@@ -142,7 +142,7 @@ const doReplace = (content, { serve, build }, type, replace) => {
  * @param alias alias 别名 map 如: {"react": "react-native-web"}
  * @param proxy vite proxy 代理，字符串，如
  * @param plugins vite imports 所对应的plugin，字符串数组, 如["vitePluginReactJsSupport()"]
- * @param esbuild esbuild config
+ * @param esBuild esbuild config
  * @param optimizeDeps vite optimizeDeps配置 字符串
  * @param rollupOptions vite rollupOptions 配置 字符串
  */

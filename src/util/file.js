@@ -4,6 +4,11 @@ const resolve = require('resolve');
 const { debugInfo } = require('./debug.js');
 const { getParams } = require('./env.js');
 
+/**
+ * 判断项目是否有jsconfig、tsconfig
+ * @param base
+ * @return {{hasTsConfig: boolean, hasJsConfig: boolean}}
+ */
 const checkoutTJSConfig = (base) => {
   const hasTsConfig = fs.existsSync(path.resolve(base, './tsconfig.json'));
   const hasJsConfig = fs.existsSync(path.resolve(base, './jsconfig.json'));
@@ -50,9 +55,9 @@ const getAliasConfByConfig = async (base, hasTsConfig) => {
 };
 
 /**
- *
+ * 从webpack配置的alias里面导出alias
  * @param base
- * @param json
+ * @param alias
  * @return {{}|null}
  */
 const getAliasByWebpackAlias = (base, alias) => {
@@ -74,7 +79,11 @@ const getAliasByWebpackAlias = (base, alias) => {
   return res;
 };
 
-
+/**
+ * 收集alias
+ * @param webpackConfigJson
+ * @return {Promise<{}>}
+ */
 const getConfigAlias = async (webpackConfigJson) => {
   const { base } = getParams();
   const { hasTsConfig, hasJsConfig } = checkoutTJSConfig(base);
@@ -89,6 +98,11 @@ const getConfigAlias = async (webpackConfigJson) => {
   };
 };
 
+/**
+ * 获取react项目的对应的webpack的entries
+ * @param webpackConfigJson
+ * @return {[]}
+ */
 const getReactEntries = (webpackConfigJson) => {
   debugInfo('entry', `根据webpack的配置获取入口`);
   const entries = webpackConfigJson.entry;
