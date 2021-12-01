@@ -3,18 +3,18 @@ const { debugInfo } = require('../util/debug.js');
 const writeJsonFile = require('write-json-file');
 const { getParams, getPackageJson } = require('../util/env.js');
 
-const prefix = 'vite-'
+const prefix = 'vite-';
 const scripts = {
   dev: 'vite',
   start: 'vite',
   preview: 'vite preview',
   build: 'vite build',
-}
+};
 
 const writePackageJson = async (base, json) => {
   const file = path.resolve(base, 'package.json');
   await writeJsonFile(file, json);
-}
+};
 
 // 处理package.json，增加新增的依赖
 const doPackageJson = async (devDeps) => {
@@ -43,9 +43,9 @@ const doPackageJson = async (devDeps) => {
   // 把处理后的json写回到package.json
   debugInfo("pack", "依赖写入完成");
   await writePackageJson(base, newJson);
-}
+};
 
 
 module.exports = {
-  doPackageJson
-}
+  doPackageJson,
+};

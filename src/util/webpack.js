@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { getEnv, getParams } = require('./env.js');
 const { webpackPath } = require('../const.js');
-const { debugError, debugInfo } = require('./debug.js');
+const { debugError } = require('./debug.js');
 
 let webpackConfig = false;
 let vueConfig = false;
@@ -19,7 +19,7 @@ const getConfig = async (config) => {
     configJson = webpackConfig;
   }
   return configJson;
-}
+};
 
 const getReactWebpackConfig = async() => {
   let configFile;
@@ -65,25 +65,17 @@ const getReactWebpackConfig = async() => {
     configJson = await getConfig(webpackConfigPath);
   }
   return configJson;
-}
+};
 
 const getVueWebpackConfig = async() => {
   process.env.NODE_ENV = 'development';
   const vueConfigPath = path.resolve(params.base, webpackPath.vueConfig);
   if (fs.existsSync(vueConfigPath)) {
-    // const servicePath = path.resolve(params.base, './node_modules/@vue/cli-service/lib/Service.js');
-    // console.log(servicePath);
-    // const Service = require(servicePath);
-    // const service = new Service(params.base);
-    // service.init('dev');
-    // console.log(service);
     vueConfig = await getConfig(vueConfigPath);
-    // todo chainWebpack, configWebpack
-    // console.log(vueConfig);
   }
   const vueWebpackPath = path.resolve(params.base, webpackPath.vueWebpack);
   return await getConfig(vueWebpackPath);
-}
+};
 
 const saveWebpackConfig = async() => {
   env = await getEnv();
@@ -112,7 +104,7 @@ const saveWebpackConfig = async() => {
       }
     }
   }
-}
+};
 
 // 获取HtmlWebpackPlugin的配置信息
 const getWebpackHtmlPluginConfig = () => {
@@ -126,7 +118,7 @@ const getWebpackHtmlPluginConfig = () => {
     }
   }
   return false;
-}
+};
 
 // 获取DefinePlugin的配置信息
 const getDefinePluginConfig = async() => {
@@ -159,7 +151,7 @@ const getDefinePluginConfig = async() => {
   } finally {
     return defines;
   }
-}
+};
 
 const getWebpackConfig = () => {
   if (!webpackConfig) {
@@ -167,13 +159,14 @@ const getWebpackConfig = () => {
     process.exit(0);
   }
   return webpackConfig;
-}
+};
+
 const getVueConfig = () => {
   if (!vueConfig) {
     return false;
   }
   return vueConfig;
-}
+};
 
 module.exports = {
   saveWebpackConfig,
@@ -181,4 +174,4 @@ module.exports = {
   getWebpackHtmlPluginConfig,
   getDefinePluginConfig,
   getVueConfig,
-}
+};

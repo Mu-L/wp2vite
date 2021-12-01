@@ -7,7 +7,7 @@ const { getParams } = require('../util/env.js');
 
 const debugKey = 'vite';
 
-const { viteConfig } = require('../template/vite.config.js')
+const { viteConfig } = require('../template/vite.config.js');
 
 /**
  * 替换imports
@@ -15,7 +15,7 @@ const { viteConfig } = require('../template/vite.config.js')
  * @param imports
  * @return content
  */
-function doImport(content, imports) {
+const doImport = (content, imports) => {
   debugInfo(debugKey, "将import写入到vite的配置文件");
   let importStr = '';
   if (imports) {
@@ -24,7 +24,7 @@ function doImport(content, imports) {
     }
   }
   return content.replace(replacePlace.$import, importStr)
-}
+};
 
 /**
  * 替换alias
@@ -32,7 +32,7 @@ function doImport(content, imports) {
  * @param alias
  * @return content
  */
-function doAlias(content, alias) {
+const doAlias = (content, alias) => {
   debugInfo(debugKey, "将alias写入到vite的配置文件");
   let aliasStr = '';
   if (alias) {
@@ -48,7 +48,7 @@ function doAlias(content, alias) {
   const pre = content.substr(0, index);
   const post = content.substr(index + replacePlace.$alias.length);
   return `${pre}${aliasStr}${post}`;
-}
+};
 
 /**
  * 替换proxy
@@ -56,7 +56,7 @@ function doAlias(content, alias) {
  * @param proxy
  * @return content
  */
-function doProxy(content, proxy) {
+const doProxy = (content, proxy) => {
   debugInfo(debugKey, "将proxy写入到vite的配置文件");
   let proxyStr = '';
   if (proxy) {
@@ -69,7 +69,7 @@ function doProxy(content, proxy) {
     proxyStr = 'let proxy = {}'
   }
   return content.replace(replacePlace.$proxy, proxyStr);
-}
+};
 
 /**
  * 替换esbuild
@@ -77,7 +77,7 @@ function doProxy(content, proxy) {
  * @param esBuild
  * @return content
  */
-function doEsBuild(content, esBuild) {
+const doEsBuild = (content, esBuild) => {
   debugInfo(debugKey, "将esbuild写入到vite的配置文件");
   let str = '';
   if (esBuild) {
@@ -90,9 +90,9 @@ function doEsBuild(content, esBuild) {
     str += 'let esbuild = {};';
   }
   return content.replace(replacePlace.$esbuild, str || '{}');
-}
+};
 
-function doDefine(content, define) {
+const doDefine = (content, define) => {
   debugInfo(debugKey, "将define写入到vite的配置文件");
   let str = '';
   if (define) {
@@ -105,7 +105,7 @@ function doDefine(content, define) {
     str += 'let define = {};';
   }
   return content.replace(replacePlace.$define, str || '{}');
-}
+};
 
 /**
  * 处理optimizeDeps配置 || rollupOptions配置
@@ -116,7 +116,7 @@ function doDefine(content, define) {
  * @param replace
  * @return {*}
  */
-function doReplace(content, { serve, build }, type, replace) {
+const doReplace = (content, { serve, build }, type, replace) => {
   let str = ''
   if (serve && Object.keys(serve).length > 0) {
     str += `if(command === 'serve') {`;
@@ -133,7 +133,7 @@ function doReplace(content, { serve, build }, type, replace) {
     str += '}'
   }
   return content.replace(replace, str);
-}
+};
 
 /**
  * 处理vite.config.js
@@ -147,7 +147,7 @@ function doReplace(content, { serve, build }, type, replace) {
  * @param rollupOptions vite rollupOptions 配置 字符串
  */
 
-function doViteConfig({ imports, alias, proxy, plugins, define, esBuild, optimizeDeps, rollupOptions }) {
+const doViteConfig = ({ imports, alias, proxy, plugins, define, esBuild, optimizeDeps, rollupOptions }) => {
   const { base } = getParams();
   let content = viteConfig;
   content = doImport(content, imports);
@@ -182,8 +182,8 @@ function doViteConfig({ imports, alias, proxy, plugins, define, esBuild, optimiz
     space_in_empty_paren: true,
   });
   fs.writeFileSync(viteFile, content);
-}
+};
 
 module.exports = {
-  doViteConfig
-}
+  doViteConfig,
+};

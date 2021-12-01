@@ -36,11 +36,11 @@ const devDeps = {};
 
 const addImport = (key, value) => {
   viteConfig.imports[key] = value;
-}
+};
 
 const addDevDeps = (key, value) => {
   devDeps[key] = value;
-}
+};
 
 /**
  * do react
@@ -65,10 +65,6 @@ const doReact = async () => {
     viteConfig.plugins.push(`vitePluginReactJsSupport([], { jsxInject: ${env.isReactMoreThan17 ? true : false}, }),`);
     viteConfig.optimizeDeps.serve.entries = false;
     viteConfig.rollupOptions.serve.input = '[]';
-  // } else {
-  //   if (env.isReactMoreThan17) {
-  //     viteConfig.esBuild.jsxInject = `import React from 'react'`
-  //   }
   }
 
   if (deps['raw-loader'] || deps['svg-inline-loader']) {
@@ -82,7 +78,7 @@ const doReact = async () => {
   addImport('reactRefresh', '@vitejs/plugin-react-refresh');
   addDevDeps('@vitejs/plugin-react-refresh', '^1.3.5');
   viteConfig.plugins.push(`reactRefresh(),`);
-}
+};
 
 const doVue = async () => {
   if (!env.isVue) {
@@ -111,7 +107,7 @@ const doVue = async () => {
   }
 
   viteConfig.define.push(`'process.env.NODE_ENV': command === 'serve' ? '"development"' : '"production"'`);
-}
+};
 
 /**
  * do common
@@ -171,7 +167,7 @@ const getProType = () => {
   } else {
     return env.isVue2 ? 'Vue2' : 'Vue3';
   }
-}
+};
 
 /**
  * transform main
@@ -205,8 +201,8 @@ const transform = async () => {
     debugError('start', 'trans 失败');
     debugError('start', error);
   }
-}
+};
 
 module.exports = {
-  transform
-}
+  transform,
+};

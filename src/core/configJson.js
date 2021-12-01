@@ -30,10 +30,10 @@ const doConfigJson = async () => {
       await writeJsonFile(file, json);
     }
   }
-}
+};
 
 module.exports = {
-  doConfigJson
-}
+  doConfigJson,
+};
 
 

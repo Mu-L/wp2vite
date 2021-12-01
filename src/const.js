@@ -3,7 +3,7 @@ const projectType = {
   rar: 'react-app-rewired',
   vue: 'vue-cli',
   other: 'other',
-}
+};
 
 const webpackPath = {
   craNoEject: './node_modules/react-scripts/config/webpack.config.js',
@@ -12,7 +12,7 @@ const webpackPath = {
   vue: './vue.config.js',
   vueWebpack: './node_modules/@vue/cli-service/webpack.config.js',
   vueConfig: './vue.config.js',
-}
+};
 
 const replacePlace = {
   $import: '$import',
@@ -23,11 +23,11 @@ const replacePlace = {
   $plugin: '$plugin',
   $rollupOptionsDefine: '$rollupOptionsDefine',
   $optimizeDepsDefine: '$optimizeDepsDefine',
-}
+};
 
 module.exports = {
   projectType,
   webpackPath,
   replacePlace,
-}
+};
 

@@ -51,8 +51,8 @@ export default ({command, mode}) => {
       }
     },
   }
-}`
+}`;
 
 module.exports = {
-  viteConfig
-}
+  viteConfig,
+};

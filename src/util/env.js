@@ -28,14 +28,14 @@ const params = {
   config: '',
   force: false,
   debug: false,
-}
+};
 
 /**
  *
  * @param deps
  * @return {boolean} 是否大于17
  */
-function checkReactIs17(deps) {
+const checkReactIs17 = (deps) => {
   // 判断react版本是否大于等于17
   const reactV = getVersion(deps['react']);
   const react17 = compareVersion(reactV, '17.0.0');
@@ -50,13 +50,13 @@ function checkReactIs17(deps) {
  * @param deps
  * @return {boolean} 判断vue版本
  */
-function checkVueVersion(deps, ver) {
+const checkVueVersion = (deps, ver) => {
   const version = getVersion(deps['vue']);
   const bigV = parseInt(version.split('.')[0], 10);
   return bigV === ver;
-}
+};
 
-function checkScript(scripts, str) {
+const checkScript = (scripts, str) => {
   for (let key in scripts) {
     const value = scripts.hasOwnProperty(key) ? scripts[key] : false;
     if (value && value.indexOf(str) !== -1) {
@@ -64,10 +64,13 @@ function checkScript(scripts, str) {
     }
   }
   return false;
-}
+};
 
-// 根据校验项目根目录下面是否有cra格式的scripts所对应的三个文件。
-function checkScripts() {
+/**
+ * 根据校验项目根目录下面是否有cra格式的scripts所对应的三个文件。
+ * @return {boolean}
+ */
+const checkScripts = () => {
   if (params.base) {
     const buildPath = path.resolve(params.base, './scripts/build.js');
     const startPath = path.resolve(params.base, './scripts/start.js');
@@ -75,7 +78,7 @@ function checkScripts() {
     return fs.existsSync(buildPath) && fs.existsSync(startPath) && fs.existsSync(testPath);
   }
   return false;
-}
+};
 
 const prepareEnv = (deps, json) => {
   if (deps['react']) {
@@ -106,7 +109,7 @@ const prepareEnv = (deps, json) => {
     debugError('目前仅支持 React/Vue 项目');
     process.exit(0);
   }
-}
+};
 
 const saveEnv = async () => {
   const base = params.base;
@@ -121,7 +124,7 @@ const saveEnv = async () => {
   prepareEnv(deps, json);
   checked = true;
   debugInfo('env', '项目属性分析完成');
-}
+};
 
 const saveParams = (base, options) => {
   params.base = base;
@@ -138,7 +141,7 @@ const saveParams = (base, options) => {
   }
   params.debug = options.debug;
   params.force = options.force;
-}
+};
 
 const getEnv = () => {
   if (!checked) {
@@ -146,7 +149,7 @@ const getEnv = () => {
     process.exit(0);
   }
   return env;
-}
+};
 
 const getParams = () => {
   if (params.base === false) {
@@ -154,13 +157,13 @@ const getParams = () => {
     process.exit(0);
   }
   return params;
-}
+};
 
 const getPackageJson = async () => {
   const file = path.resolve(params.base, 'package.json');
   const json = await loadJsonFile(file);
   return json;
-}
+};
 
 module.exports = {
   saveParams,
@@ -168,4 +171,4 @@ module.exports = {
   getEnv,
   getParams,
   getPackageJson,
-}
+};

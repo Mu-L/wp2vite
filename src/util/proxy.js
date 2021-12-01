@@ -4,6 +4,7 @@ const loadJsonFile = require('load-json-file');
 const { compareVersion } = require("./util.js");
 const { debugInfo, debugError } = require("./debug.js");
 const { getParams } = require('./env.js');
+
 /**
  * mock http-proxy-middleware来获取项目中配置的代理
  * @return {Promise<{}|boolean>}
@@ -52,8 +53,8 @@ const getReactProxyByMock = async () => {
   } catch (err) {
     debugError('proxy', err.message);
   }
-}
+};
 
 module.exports = {
-  getReactProxyByMock
-}
+  getReactProxyByMock,
+};
