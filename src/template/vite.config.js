@@ -47,11 +47,11 @@ export default ({command, mode}) => {
         less: {
           // 支持内联 JavaScript
           javascriptEnabled: true,
-        }
-      }
+        },
+      },
     },
-  }
-}`;
+  };
+};`;
 
 module.exports = {
   viteConfig,

@@ -49,8 +49,8 @@ export default ({
         less: {
           // 支持内联 JavaScript
           javascriptEnabled: true,
-        }
-      }
+        },
+      },
     },
-  }
-}
+  };
+};
