@@ -19,7 +19,7 @@ cli
     if (!options.force) {
       options.force = false;
     }
-    options.debug = true; //!!options.debug;
+    options.debug = true; // !!options.debug;
     try {
       await start(base, options);
     } catch (e) {

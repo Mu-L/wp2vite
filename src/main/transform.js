@@ -159,7 +159,7 @@ const doCommon = async () => {
       viteConfig.alias[key] = aliasConf[key];
     }
   }
-}
+};
 
 const getProType = () => {
   if (env.isReact) {
@@ -180,7 +180,7 @@ const transform = async () => {
     deps = {
       ...env.packageJson['dependencies'],
       ...env.packageJson['devDependencies'],
-    }
+    };
     debugInfo('start', `wp2vite 认为是*${getProType()}*项目`);
     webpackConfigJson = await getWebpackConfig();
     await doCommon();
@@ -192,7 +192,7 @@ const transform = async () => {
     const defines = await getDefinePluginConfig();
     viteConfig.define.push(...defines);
     // 写入
-    await doViteConfig(viteConfig);;
+    await doViteConfig(viteConfig);
     await doPackageJson(devDeps);
     await doConfigJson();
 

@@ -9,8 +9,8 @@ const checkoutTJSConfig = (base) => {
   const hasJsConfig = fs.existsSync(path.resolve(base, './jsconfig.json'));
   return {
     hasTsConfig,
-    hasJsConfig
-  }
+    hasJsConfig,
+  };
 };
 
 /**
@@ -32,16 +32,16 @@ const getAliasConfByConfig = async (base, hasTsConfig) => {
   }
   if (json && json.compilerOptions && json.compilerOptions.baseUrl) {
     debugInfo('alias', `项目的baseUrl为:${json.compilerOptions.baseUrl}`);
-    const alias = {}
+    const alias = {};
     const src = json.compilerOptions.baseUrl;
     if (src !== './') {
       const files = fs.readdirSync(path.join(base, '/' + src));
       files.forEach(function(item, index) {
-        let stat = fs.statSync(path.join(base, '/' + src + '/' + item));
+        let stat = fs.statSync(path.join(base, `/${src}/${item}`));
         if (stat.isDirectory() === true) {
           alias[item] = `path.resolve(__dirname, '${src}/${item}')`;
         }
-      })
+      });
       return alias;
     }
   }
@@ -57,8 +57,9 @@ const getAliasConfByConfig = async (base, hasTsConfig) => {
  */
 const getAliasByWebpackAlias = (base, alias) => {
   debugInfo("alias", "根据webpack配置文件处理alias");
-  if (!alias)
+  if (!alias) {
     return null;
+  }
   const res = {};
   for (const key in alias) {
     const value = alias[key];
@@ -84,7 +85,7 @@ const getConfigAlias = async (webpackConfigJson) => {
   const alias = getAliasByWebpackAlias(base, webpackConfigJson?.resolve?.alias);
   return {
     ...configAlias,
-    ...alias
+    ...alias,
   };
 }
 
@@ -92,7 +93,8 @@ const getReactEntries = (webpackConfigJson) => {
   debugInfo('entry', `根据webpack的配置获取入口`);
   const entries = webpackConfigJson.entry;
   const cwd = process.cwd();
-  let res = [];
+  const res = [];
+
   if (Array.isArray(entries) || typeof entries === 'object') {
     for (const key in entries) {
       const entry = entries[key];

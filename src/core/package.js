@@ -21,7 +21,9 @@ const doPackageJson = async (devDeps) => {
   const { base } = getParams();
   const json = await getPackageJson(base);
   debugInfo("pack", "依赖写入");
-  let newJson = JSON.parse(JSON.stringify(json));
+
+  const newJson = JSON.parse(JSON.stringify(json));
+
   // 处理devDependencies
   if(!newJson.devDependencies) {
     newJson.devDependencies = {};

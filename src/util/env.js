@@ -43,7 +43,7 @@ const checkReactIs17 = (deps) => {
   const scriptV = getVersion(deps['react-scripts']);
   const script4 = compareVersion(scriptV, '4.0.0');
   return react17 || script4;
-}
+};
 
 /**
  *
@@ -57,7 +57,7 @@ const checkVueVersion = (deps, ver) => {
 };
 
 const checkScript = (scripts, str) => {
-  for (let key in scripts) {
+  for (const key in scripts) {
     const value = scripts.hasOwnProperty(key) ? scripts[key] : false;
     if (value && value.indexOf(str) !== -1) {
       return true;

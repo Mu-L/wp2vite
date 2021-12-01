@@ -47,18 +47,18 @@ const getReactWebpackConfig = async() => {
         const webpack = overrideConfig.webpack(webpackConfig('development'), 'development');
         configJson = {
           ...webpack
-        }
+        };
       }
       if (overrideConfig.devServer && typeof overrideConfig.devServer === 'function') {
         const mockFunc = function() {
-          return function () {}
-        }
-        const mockFun = function() {}
+          return function () {};
+        };
+        const mockFun = function() {};
         const devServer = overrideConfig.devServer(mockFunc)(mockFun);
         configJson = {
           ...configJson,
           devServer
-        }
+        };
       }
     }
   } else {
@@ -74,7 +74,8 @@ const getVueWebpackConfig = async() => {
     vueConfig = await getConfig(vueConfigPath);
   }
   const vueWebpackPath = path.resolve(params.base, webpackPath.vueWebpack);
-  return await getConfig(vueWebpackPath);
+  const result = await getConfig(vueWebpackPath);
+  return result;
 };
 
 const saveWebpackConfig = async() => {
@@ -145,11 +146,10 @@ const getDefinePluginConfig = async() => {
         }
       }
     }
+    return defines;
   } catch (err) {
     debugError('webpack', '获取 DefinePlugin 失败');
     debugError('webpack', err);
-  } finally {
-    return defines;
   }
 };
 

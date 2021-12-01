@@ -8,8 +8,8 @@ const { checkoutTJSConfig } = require('../util/file.js');
 const doConfigJson = async () => {
   const { base } = getParams();
   const { hasTsConfig, hasJsConfig } = checkoutTJSConfig(base);
-  if (hasTsConfig || hasJsConfig) {
 
+  if (hasTsConfig || hasJsConfig) {
     const file = path.join(base, hasTsConfig ? '/tsconfig.json' : '/jsconfig.json');
     let json;
     if (hasTsConfig) {

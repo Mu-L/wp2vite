@@ -24,10 +24,10 @@ const getReactProxyByMock = async () => {
   }
   try {
     const json = await loadJsonFile(middleJson);
-    const middlePath = path.join(base + '/node_modules/http-proxy-middleware/', json.main);
+    const middlePath = path.join(`${base}/node_modules/http-proxy-middleware/`, json.main);
     const res = {};
     function mockCreateProxyMiddleware(context, options) {
-      res[context] = options
+      res[context] = options;
     }
     if (compareVersion(json.version, '1.0.0')) {
       debugInfo('proxy', `http-proxy-middleware版本大于1，开始mock`);
@@ -35,18 +35,18 @@ const getReactProxyByMock = async () => {
       hpm.createProxyMiddleware = mockCreateProxyMiddleware;
       const setup = require(setupProxyPath);
       setup({ use: () => {}});
-      delete require.cache[middlePath]
+      delete require.cache[middlePath];
       debugInfo('proxy', `处理完成，共处理${Object.keys(res).length}个代理.`);
       return res;
     } else {
       debugInfo('proxy', `http-proxy-middleware版本小于1，开始mock`);
       const hpm = mockCreateProxyMiddleware;
       require.cache[middlePath] = {
-        exports: hpm
+        exports: hpm,
       };
       const setup = require(setupProxyPath);
       setup({ use: () => {}});
-      delete require.cache[middlePath]
+      delete require.cache[middlePath];
       debugInfo('proxy', `处理完成，共处理${Object.keys(res).length}个代理.`);
       return res;
     }

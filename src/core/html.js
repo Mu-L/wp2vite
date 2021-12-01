@@ -42,10 +42,10 @@ const doHtml = (root, entries) => {
 
   let scripts = '';
   entries.forEach((item) => {
-    scripts += `<script type="module" src="${item}"></script>`
-  })
+    scripts += `<script type="module" src="${item}"></script>`;
+  });
   content = content.replace('$root', root).replace('$script', scripts);
-  const file = base + '/index.html';
+  const file = `${base}/index.html`;
   fs.writeFileSync(file, content);
   debugInfo('html', `html处理完成`);
 };

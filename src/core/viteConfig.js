@@ -23,7 +23,7 @@ const doImport = (content, imports) => {
       importStr += `import ${importsKey} from '${imports[importsKey]}';`;
     }
   }
-  return content.replace(replacePlace.$import, importStr)
+  return content.replace(replacePlace.$import, importStr);
 };
 
 /**
@@ -42,7 +42,7 @@ const doAlias = (content, alias) => {
     }
     aliasStr += '}';
   } else {
-    aliasStr = 'let alias = {}'
+    aliasStr = 'let alias = {}';
   }
   const index = content.indexOf(replacePlace.$alias);
   const pre = content.substr(0, index);
@@ -66,7 +66,7 @@ const doProxy = (content, proxy) => {
     }
     proxyStr += '}';
   } else {
-    proxyStr = 'let proxy = {}'
+    proxyStr = 'let proxy = {}';
   }
   return content.replace(replacePlace.$proxy, proxyStr);
 };
@@ -99,7 +99,7 @@ const doDefine = (content, define) => {
     str += 'let define = {';
     define.forEach((item) => {
       str += `${item},`;
-    })
+    });
     str += '}';
   } else {
     str += 'let define = {};';
@@ -117,20 +117,20 @@ const doDefine = (content, define) => {
  * @return {*}
  */
 const doReplace = (content, { serve, build }, type, replace) => {
-  let str = ''
+  let str = '';
   if (serve && Object.keys(serve).length > 0) {
     str += `if(command === 'serve') {`;
     for (const key in serve) {
       str += `${type}.${key} = ${serve[key]};`;
     }
-    str += '}'
+    str += '}';
   }
   if (build && Object.keys(build).length > 0) {
     str += `if(command === 'build') {`;
     for (const key in build) {
       str += `${type}.${key} = ${build[key]};`;
     }
-    str += '}'
+    str += '}';
   }
   return content.replace(replace, str);
 };

@@ -10,9 +10,9 @@
 const compareVersion = (current, version) => {
   const curs = current.split('.');
   const vers = version.split('.');
-  for(let i= 0; i< 3; i++) {
-    if(curs[i] > curs[i]) {
-      return true
+  for(let i = 0; i < 3; i++) {
+    if(curs[i] > vers[i]) {
+      return true;
     } else if (curs[i] < vers[i]) {
       return false;
     } else {
@@ -29,7 +29,7 @@ const compareVersion = (current, version) => {
  */
 const isNumber = (num) => {
   num = +num;
-  return typeof num === 'number' && !isNaN(num)
+  return typeof num === 'number' && !isNaN(num);
 };
 
 /**

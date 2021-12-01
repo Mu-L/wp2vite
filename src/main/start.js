@@ -23,7 +23,7 @@ const start = async (base, options) => {
   } catch (error) {
     debugError('error', error);
   }
-}
+};
 
 module.exports = {
   start,
