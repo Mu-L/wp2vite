@@ -48,5 +48,4 @@ describe("util test", () => {
     const res = await getReactProxyByMock();
     expect(!res).toBeTruthy();
   });
-
 });

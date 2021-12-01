@@ -61,5 +61,4 @@ describe("core test", () => {
   test('test doConfigJson', async () => {
     await doConfigJson();
   });
-
 });
