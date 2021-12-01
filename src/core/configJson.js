@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const resolve = require('resolve');
 const writeJsonFile = require('write-json-file');
