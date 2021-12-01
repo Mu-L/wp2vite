@@ -35,9 +35,9 @@ const getAliasConfByConfig = async (base, hasTsConfig) => {
     const alias = {};
     const src = json.compilerOptions.baseUrl;
     if (src !== './') {
-      const files = fs.readdirSync(path.join(base, '/' + src));
+      const files = fs.readdirSync(path.join(base, `/${src}`));
       files.forEach(function(item, index) {
-        let stat = fs.statSync(path.join(base, `/${src}/${item}`));
+        const stat = fs.statSync(path.join(base, `/${src}/${item}`));
         if (stat.isDirectory() === true) {
           alias[item] = `path.resolve(__dirname, '${src}/${item}')`;
         }
@@ -87,7 +87,7 @@ const getConfigAlias = async (webpackConfigJson) => {
     ...configAlias,
     ...alias,
   };
-}
+};
 
 const getReactEntries = (webpackConfigJson) => {
   debugInfo('entry', `根据webpack的配置获取入口`);
