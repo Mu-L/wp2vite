@@ -12,9 +12,9 @@ let params;
 /**
  * 获取配置信息的基础能力
  * @param config
- * @return {Promise<*>}
+ * @return configJson
  */
-const getConfig = async (config) => {
+const getConfig = (config) => {
   process.env.NODE_ENV = 'development';
   const webpackConfig = require(config);
   let configJson;
@@ -28,9 +28,9 @@ const getConfig = async (config) => {
 
 /**
  * for react项目
- * @return {Promise<{}>}
+ * @return configJson
  */
-const getReactWebpackConfig = async() => {
+const getReactWebpackConfig = () => {
   let configFile;
   if (env.isReactAppRewired) {
     configFile = webpackPath.rar;
@@ -71,7 +71,7 @@ const getReactWebpackConfig = async() => {
       }
     }
   } else {
-    configJson = await getConfig(webpackConfigPath);
+    configJson = getConfig(webpackConfigPath);
   }
   return configJson;
 };
@@ -80,27 +80,26 @@ const getReactWebpackConfig = async() => {
  * for vue项目
  * @return {Promise<*>}
  */
-const getVueWebpackConfig = async() => {
+const getVueWebpackConfig = () => {
   process.env.NODE_ENV = 'development';
   const vueConfigPath = path.resolve(params.base, webpackPath.vueConfig);
   if (fs.existsSync(vueConfigPath)) {
-    vueConfig = await getConfig(vueConfigPath);
+    vueConfig = getConfig(vueConfigPath);
   }
   const vueWebpackPath = path.resolve(params.base, webpackPath.vueWebpack);
-  const result = await getConfig(vueWebpackPath);
+  const result = getConfig(vueWebpackPath);
   return result;
 };
 
 /**
  * 保存当前项目的webpack的配置信息
- * @return {Promise<void>}
  */
-const saveWebpackConfig = async() => {
-  env = await getEnv();
+const saveWebpackConfig = () => {
+  env = getEnv();
   params = getParams();
   if (env.hasConfig) {
     // 传递了config，用其传递的config
-    webpackConfig = await getConfig(params.config);
+    webpackConfig = getConfig(params.config);
   } else if (env.isNeedConfig) {
     // 未传config，并且需要config的话，报错
     debugError('webpack', '未传递webpack配置文件路径');
@@ -108,14 +107,14 @@ const saveWebpackConfig = async() => {
   } else {
     // 走正常判断逻辑
     if (env.isReact) {
-      webpackConfig = await getReactWebpackConfig();
+      webpackConfig = getReactWebpackConfig();
     } else if (env.isVue) {
-      webpackConfig = await getVueWebpackConfig();
+      webpackConfig = getVueWebpackConfig();
     } else {
       // 走兜底逻辑，获取当前路径下面的config.
       const config = path.resolve(params.base, './webpack.config.js');
       if (fs.existsSync(config)) {
-        webpackConfig = await getConfig(config);
+        webpackConfig = getConfig(config);
       } else {
         debugError('webpack', '跟目录下未找到webpack.config.js');
         process.exit(0);
@@ -143,9 +142,9 @@ const getWebpackHtmlPluginConfig = () => {
 
 /**
  * 获取DefinePlugin的配置信息
- * @return {Promise<[]>}
+ * @return []
  */
-const getDefinePluginConfig = async() => {
+const getDefinePluginConfig = () => {
   const defines = [];
   try {
     if (webpackConfig && Array.isArray(webpackConfig.plugins)) {

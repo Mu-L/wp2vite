@@ -10,14 +10,14 @@ const { debugError, debugInfo, switchDebug } = require('../util/debug.js');
  */
 const prepare = async (base, options) => {
   saveParams(base, options);
-  await saveEnv(base);
-  await saveWebpackConfig();
+  await saveEnv();
+  saveWebpackConfig();
 };
 
 /**
  * 项目转换完毕
  */
-const done = async () => {
+const done = () => {
   debugInfo('todo', `npm install && npm run vite-start`);
   debugInfo('todo', `前往 https://github.com/vitejs/awesome-vite 查看你可能需要的插件`);
 };
@@ -34,7 +34,7 @@ const start = async (base, options) => {
     switchDebug(options.debug);
     await prepare(base, options);
     await transform();
-    await done();
+    done();
   } catch (error) {
     debugError('error', error);
   }

@@ -21,9 +21,10 @@ const checkoutTJSConfig = (base) => {
 /**
  * 根据tsconfig.json或者jsconfig.json来获取alias
  * @param base
- * @return {Promise<{}|null>}
+ * @param hasTsConfig
+ * @return alias
  */
-const getAliasConfByConfig = async (base, hasTsConfig) => {
+const getAliasConfByConfig = (base, hasTsConfig) => {
   debugInfo('alias', `根据config.json获取别名`);
   const file = path.join(base, hasTsConfig ? '/tsconfig.json' : '/jsconfig.json');
   let json;
@@ -51,7 +52,7 @@ const getAliasConfByConfig = async (base, hasTsConfig) => {
     }
   }
   debugInfo('alias', `别名获取完成`);
-  return { };
+  return {};
 };
 
 /**
@@ -84,12 +85,12 @@ const getAliasByWebpackAlias = (base, alias) => {
  * @param webpackConfigJson
  * @return {Promise<{}>}
  */
-const getConfigAlias = async (webpackConfigJson) => {
+const getConfigAlias = (webpackConfigJson) => {
   const { base } = getParams();
   const { hasTsConfig, hasJsConfig } = checkoutTJSConfig(base);
   let configAlias = {};
   if (hasTsConfig || hasJsConfig) {
-    configAlias = await getAliasConfByConfig(base, hasTsConfig);
+    configAlias = getAliasConfByConfig(base, hasTsConfig);
   }
   const alias = getAliasByWebpackAlias(base, webpackConfigJson?.resolve?.alias);
   return {

@@ -92,15 +92,14 @@ const doReact = async () => {
 
 /**
  * do vue项目
- * @return {Promise<void>}
  */
-const doVue = async () => {
+const doVue = () => {
   if (!env.isVue) {
     return;
   }
   const entries = getEntries(webpackConfigJson);
   doVueHtml(entries);
-  vueConfigJson = await getVueConfig();
+  vueConfigJson = getVueConfig();
   viteConfig.proxy = vueConfigJson?.devServer?.proxy;
 
   if (env.isVue2) {
@@ -125,9 +124,8 @@ const doVue = async () => {
 
 /**
  * do common
- * @return {Promise}
  */
-const doCommon = async () => {
+const doCommon = () => {
   addDevDeps('vite', '2');
   // 插入legacy
   addImport('legacyPlugin', '@vitejs/plugin-legacy');
@@ -166,7 +164,7 @@ const doCommon = async () => {
     doOtherHtml(entries);
   }
   // tsconfig.js or jsconfig.json
-  const aliasConf = await getConfigAlias(webpackConfigJson);
+  const aliasConf = getConfigAlias(webpackConfigJson);
   if (aliasConf) {
     addImport('* as path', 'path');
     for (const key in aliasConf) {
@@ -200,17 +198,17 @@ const transform = async () => {
       ...env.packageJson['devDependencies'],
     };
     debugInfo('start', `wp2vite 认为是*${getProType()}*项目`);
-    webpackConfigJson = await getWebpackConfig();
-    await doCommon();
+    webpackConfigJson = getWebpackConfig();
+    doCommon();
 
     // 分析
     await doReact();
-    await doVue();
+    doVue();
 
-    const defines = await getDefinePluginConfig();
+    const defines = getDefinePluginConfig();
     viteConfig.define.push(...defines);
     // 写入
-    await doViteConfig(viteConfig);
+    doViteConfig(viteConfig);
     await doPackageJson(devDeps);
     await doConfigJson();
 

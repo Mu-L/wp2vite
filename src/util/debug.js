@@ -4,12 +4,17 @@ let debugSwitch = false;
 
 /**
  * debug开关，默认不开启
- * @param debug
+ * @param debug boolean
  */
 const switchDebug = (debug) => {
   debugSwitch = debug;
 };
 
+/**
+ * debug 错误信息
+ * @param type 类型
+ * @param msg 信息
+ */
 const debugError = (type, msg) => {
   if (!msg) {
     msg = type;
@@ -18,6 +23,11 @@ const debugError = (type, msg) => {
   debugSwitch && log(chalk.bgBlueBright(`[wp2vite-${type}]:`) + chalk.red(msg));
 };
 
+/**
+ * debug 信息
+ * @param type 类型
+ * @param msg 信息
+ */
 const debugInfo = (type, msg) => {
   if (!msg) {
     msg = type;
@@ -26,6 +36,11 @@ const debugInfo = (type, msg) => {
   debugSwitch && log(chalk.bgBlueBright(`[wp2vite-${type}]:`) + chalk.green(msg));
 };
 
+/**
+ * debug warning信息
+ * @param type 类型
+ * @param msg 信息
+ */
 const debugWarning = (type, msg) => {
   if (!msg) {
     msg = type;
